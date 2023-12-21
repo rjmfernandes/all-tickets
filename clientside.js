@@ -67,9 +67,8 @@ function getSubDomains(str){
     console.log(results);
     return results;
 }
-
-if(subdomains.length==4&&subdomains.indexOf('.zendesk')==2&&subdomains.indexOf('.com')==3) {
-    var startOrgUrl='https://'+subdomains[1]+'.zendesk.com/agent/organizations/';
+var startOrgUrl='https://'+subdomains[1]+'.zendesk.com/agent/organizations/';
+if(document.URL.startsWith(startOrgUrl)) {
     newWindow = window.open('','chrome-extension-zendesk');
     newWindow.document.body.innerHTML = null;
     var lastPart=document.URL.substring(startOrgUrl.length);
