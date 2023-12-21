@@ -1,0 +1,24 @@
+{
+    "name": "All Tickets",
+    "description": "Chrome extension for displaying all tickets from an organization in a single page.",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "permissions": [
+        "scripting",
+        "activeTab",
+        "webRequest",
+        "webNavigation",
+        "cookies",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "*://*.zendesk.com/*"
+    ],
+    "action":{
+        "default_title": "All Tickets",
+        "default_icon": "assets/keyframes.png"
+    }
+}
