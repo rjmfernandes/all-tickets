@@ -1,4 +1,4 @@
-var tickets=[];
+var tickets=new Map();
 var ticketsLength=0;
 var newWindow;
 var subdomains=getSubDomains(document.URL);
@@ -15,7 +15,7 @@ async function getTicket(ticketId,_callback) {
     }).then(function(responseTicket) {
         printToWindow( 'Ticket details '+ticketId);
         responseTicket.text().then( (html) => {
-            tickets.push(html);
+            tickets.set(ticketId,html);
             if(_callback){
                 _callback();
             }
@@ -55,8 +55,9 @@ function printToWindow(msg) {
 
 
 function printTicketsIfComplete(){
-    if(tickets.length==ticketsLength) {
-        printToWindow(tickets.join(''));
+    if(tickets.size==ticketsLength) {
+        tickets = new Map([...tickets.entries()].sort((a, b) => b[0] - a[0]));
+        printToWindow(Array.from(tickets.values()).join(''));
     }
 }
 
@@ -64,7 +65,6 @@ function getSubDomains(str){
     var results = str.match(/(^\w+:\/\/)([^.]+)/);
     results.splice(0, 1);
     results = results.concat(str.match(/\.\w+/g));
-    console.log(results);
     return results;
 }
 var startOrgUrl='https://'+subdomains[1]+'.zendesk.com/agent/organizations/';
